@@ -89,3 +89,11 @@ document.querySelector(".again").addEventListener("click", function () {
   displayScore(score);
   attempts = 0;
 });
+
+function climbing(typeOfClimbArray) {
+  if (typeOfClimbArray.includes("jug")) {
+    console.log("This climb should be climbed");
+  } else {
+    console.log("NAH");
+  }
+}
