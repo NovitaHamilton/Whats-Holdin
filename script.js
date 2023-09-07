@@ -39,7 +39,6 @@ console.log(hint);
 document.querySelector('.hint').textContent = hint;
 
 document.querySelector('.check').addEventListener('click', function () {
-  //   const guess = Number(document.querySelector('.guess').value);
   const guess = document.querySelector('.guess').value;
   // When there's no input
   if (!guess) {
@@ -77,7 +76,6 @@ document.querySelector('.check').addEventListener('click', function () {
 });
 document.querySelector('.again').addEventListener('click', function () {
   score = 20;
-  //   secretNumber = Math.trunc(Math.random() * 20) + 1;
   randomIndex = Math.trunc(Math.random() * words.length);
   secretWord = getRandomWord();
   hint = getHint();
