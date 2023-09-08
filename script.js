@@ -22,9 +22,8 @@ const value = [
   { word: 'pinch', hint: 'Squeeze em tight and feel the burn' },
 ];
 
-let randomIndex;
 function getRandomValue() {
-  randomIndex = Math.trunc(Math.random() * value.length);
+  const randomIndex = Math.trunc(Math.random() * value.length);
   console.log(randomIndex);
   return value[randomIndex];
 }
@@ -76,7 +75,6 @@ document.querySelector('.check').addEventListener('click', function () {
 });
 document.querySelector('.again').addEventListener('click', function () {
   score = 20;
-  randomIndex = Math.trunc(Math.random() * value.length);
   secretWord = getRandomValue();
   hints = getRandomValue().hint;
   document.querySelector('.hint').textContent = hints;
