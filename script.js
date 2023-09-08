@@ -11,16 +11,6 @@ const displayMessage = function (message) {
 const displayScore = function (score) {
   document.querySelector('.score').textContent = score;
 };
-
-// const value = ['jug', 'crimp', 'sloper', 'pocket', 'pinch'];
-// const hints = [
-//   'Makes you feel like you can conquer the world',
-//   'Feels like tiny razor blades for your fingers',
-//   'Might look innocent, but a sly fox trying to trick you into falling off the wall',
-//   'Might as well pull a pulley',
-//   'Squeeze em tight and feel the burn',
-// ];
-
 const value = [
   { word: 'jug', hint: 'Makes you feel like you can conquer the world' },
   { word: 'crimp', hint: 'Feels like tiny razor blades for your fingers' },
@@ -32,30 +22,18 @@ const value = [
   { word: 'pinch', hint: 'Squeeze em tight and feel the burn' },
 ];
 
-// let randomIndex = Math.trunc(Math.random() * value.length);
-// console.log(randomIndex);
-
-// function getRandomValue() {
-//   return value[randomIndex];
-// }
 let randomIndex;
-
 function getRandomValue() {
   randomIndex = Math.trunc(Math.random() * value.length);
   console.log(randomIndex);
   return value[randomIndex];
 }
 
-// Generate random word
-// let secretWord = getRandomValue();
+// Generate Random Word
 let secretWord = getRandomValue().word;
 console.log(secretWord);
 
-// Give a hint
-// function getHint() {
-//   return hints[randomIndex];
-// }
-// let hint = getHint();
+// Generate Hint
 let hints = getRandomValue().hint;
 console.log(hints);
 document.querySelector('.hint').textContent = hints;
