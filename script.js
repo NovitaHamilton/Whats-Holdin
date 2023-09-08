@@ -12,31 +12,53 @@ const displayScore = function (score) {
   document.querySelector('.score').textContent = score;
 };
 
-const words = ['jug', 'crimp', 'sloper', 'pocket', 'pinch'];
-const hints = [
-  'Makes you feel like you can conquer the world',
-  'Feels like tiny razor blades for your fingers',
-  'Might look innocent, but a sly fox trying to trick you into falling off the wall',
-  'Might as well pull a pulley',
-  'Squeeze em tight and feel the burn',
-];
-let randomIndex = Math.trunc(Math.random() * words.length);
+// const value = ['jug', 'crimp', 'sloper', 'pocket', 'pinch'];
+// const hints = [
+//   'Makes you feel like you can conquer the world',
+//   'Feels like tiny razor blades for your fingers',
+//   'Might look innocent, but a sly fox trying to trick you into falling off the wall',
+//   'Might as well pull a pulley',
+//   'Squeeze em tight and feel the burn',
+// ];
 
-function getRandomWord() {
-  return words[randomIndex];
+const value = [
+  { word: 'jug', hint: 'Makes you feel like you can conquer the world' },
+  { word: 'crimp', hint: 'Feels like tiny razor blades for your fingers' },
+  {
+    word: 'sloper',
+    hint: 'Might look innocent, but a sly fox trying to trick you into falling off the wall',
+  },
+  { word: 'pocket', hint: 'Might as well pull a pulley' },
+  { word: 'pinch', hint: 'Squeeze em tight and feel the burn' },
+];
+
+// let randomIndex = Math.trunc(Math.random() * value.length);
+// console.log(randomIndex);
+
+// function getRandomValue() {
+//   return value[randomIndex];
+// }
+let randomIndex;
+
+function getRandomValue() {
+  randomIndex = Math.trunc(Math.random() * value.length);
+  console.log(randomIndex);
+  return value[randomIndex];
 }
 
 // Generate random word
-let secretWord = getRandomWord();
+// let secretWord = getRandomValue();
+let secretWord = getRandomValue().word;
 console.log(secretWord);
 
 // Give a hint
-function getHint() {
-  return hints[randomIndex];
-}
-let hint = getHint();
-console.log(hint);
-document.querySelector('.hint').textContent = hint;
+// function getHint() {
+//   return hints[randomIndex];
+// }
+// let hint = getHint();
+let hints = getRandomValue().hint;
+console.log(hints);
+document.querySelector('.hint').textContent = hints;
 
 document.querySelector('.check').addEventListener('click', function () {
   const guess = document.querySelector('.guess').value;
@@ -76,10 +98,10 @@ document.querySelector('.check').addEventListener('click', function () {
 });
 document.querySelector('.again').addEventListener('click', function () {
   score = 20;
-  randomIndex = Math.trunc(Math.random() * words.length);
-  secretWord = getRandomWord();
-  hint = getHint();
-  document.querySelector('.hint').textContent = hint;
+  randomIndex = Math.trunc(Math.random() * value.length);
+  secretWord = getRandomValue();
+  hints = getRandomValue().hint;
+  document.querySelector('.hint').textContent = hints;
   document.querySelector('.number').textContent = '?';
   displayMessage('Start guessing...');
   document.querySelector('.message').style.color = '#eee';
