@@ -1,16 +1,11 @@
 'use strict';
-let score = 20;
+const maxScore = 20;
+let score = maxScore;
 let highscore = 0;
 const maxAttempts = 3;
 let attempts = 0;
-
-const displayMessage = function (message) {
-  document.querySelector('.message').textContent = message;
-};
-
-const displayScore = function (score) {
-  document.querySelector('.score').textContent = score;
-};
+let secretWord;
+let hints;
 const value = [
   { word: 'jug', hint: 'Makes you feel like you can conquer the world' },
   { word: 'crimp', hint: 'Feels like tiny razor blades for your fingers' },
@@ -22,68 +17,82 @@ const value = [
   { word: 'pinch', hint: 'Squeeze em tight and feel the burn' },
 ];
 
+const elementNumber = document.querySelector('.number');
+const elementBody = document.querySelector('body');
+const elementMessage = document.querySelector('.message');
+const elementHighscore = document.querySelector('.highscore');
+const elementAgain = document.querySelector('.again');
+const elementHint = document.querySelector('.hint');
+const elementGuess = document.querySelector('.guess');
+
+window.addEventListener('load', getSecretWordAndHint);
+document.querySelector('.check').addEventListener('click', checkAnswer);
+document.querySelector('.again').addEventListener('click', againButton);
+
+function displayElementContent(elementSelector, text) {
+  document.querySelector(elementSelector).textContent = text;
+}
+
 function getRandomValue() {
   const randomIndex = Math.trunc(Math.random() * value.length);
-  console.log(randomIndex);
   return value[randomIndex];
 }
 
-// Generate Random Word
-let secretWord = getRandomValue().word;
-console.log(secretWord);
+function getSecretWordAndHint() {
+  secretWord = getRandomValue().word;
+  hints = getRandomValue().hint;
+  elementHint.textContent = hints;
+}
 
-// Generate Hint
-let hints = getRandomValue().hint;
-console.log(hints);
-document.querySelector('.hint').textContent = hints;
-
-document.querySelector('.check').addEventListener('click', function () {
+function checkAnswer() {
   const guess = document.querySelector('.guess').value;
   // When there's no input
   if (!guess) {
-    displayMessage(
+    displayElementContent(
+      '.message',
       `⛔️ No word entered! You have ${maxAttempts - attempts} attempts left.`
     );
   } else if (guess === secretWord) {
-    displayMessage("That's right! 🎉");
-    document.querySelector('.number').textContent = secretWord;
-    document.querySelector('body').style.backgroundColor = '#648eb2';
-    document.querySelector('.number').style.width = '60rem';
-    document.querySelector('.message').style.color = '#eee';
+    displayElementContent('.message', "That's right! 🎉");
+    elementNumber.textContent = secretWord;
+    elementBody.style.backgroundColor = '#648eb2';
+    elementNumber.style.width = '60rem';
+    elementMessage.style.color = '#eee';
     if (score > highscore) {
       highscore = score;
-      document.querySelector('.highscore').textContent = highscore;
+      elementHighscore.textContent = highscore;
     }
   } else if (guess !== secretWord) {
     attempts++;
     if (score > 1 && attempts < maxAttempts) {
-      displayMessage(
+      displayElementContent(
+        '.message',
         `Nope! Think harder 🧐! You have ${
           maxAttempts - attempts
         } attempts left.`
       );
-      document.querySelector('.message').style.color = '#f80404';
+      elementMessage.style.color = '#f80404';
       score--;
-      displayScore(score);
+      displayElementContent('.score', score);
     } else {
-      displayMessage(
+      displayElementContent(
+        '.message',
         `😩 You lost the game! The correct answer is ${secretWord}.`
       );
-      displayScore(0);
+      displayElementContent('.score', 0);
     }
   }
-});
-document.querySelector('.again').addEventListener('click', function () {
-  score = 20;
-  secretWord = getRandomValue();
-  hints = getRandomValue().hint;
-  document.querySelector('.hint').textContent = hints;
-  document.querySelector('.number').textContent = '?';
-  displayMessage('Start guessing...');
-  document.querySelector('.message').style.color = '#eee';
-  document.querySelector('.guess').value = '';
-  document.querySelector('body').style.backgroundColor = '#222';
-  document.querySelector('.number').style.width = '15rem';
-  displayScore(score);
+}
+
+function againButton() {
+  score = maxScore;
+  getSecretWordAndHint();
+  elementNumber.textContent = '?';
+  displayElementContent('.message', 'Start guessing...');
+  elementMessage.style.color = '#eee';
+  elementGuess.value = '';
+  elementBody.style.backgroundColor = '#222';
+  elementNumber.style.width = '15rem';
+  displayElementContent('.score', score);
   attempts = 0;
-});
+}
