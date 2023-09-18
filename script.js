@@ -39,8 +39,9 @@ function getRandomValue() {
 }
 
 function getSecretWordAndHint() {
-  secretWord = getRandomValue().word;
-  hints = getRandomValue().hint;
+  const randomValue = getRandomValue();
+  secretWord = randomValue.word;
+  hints = randomValue.hint;
   elementHint.textContent = hints;
 }
 
