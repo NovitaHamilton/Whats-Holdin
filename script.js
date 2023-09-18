@@ -24,25 +24,28 @@ const elementHighscore = document.querySelector('.highscore');
 const elementAgain = document.querySelector('.again');
 const elementHint = document.querySelector('.hint');
 const elementGuess = document.querySelector('.guess');
+const elementCheck = document.querySelector('.check');
 
 window.addEventListener('load', getSecretWordAndHint);
-document.querySelector('.check').addEventListener('click', checkAnswer);
-document.querySelector('.again').addEventListener('click', againButton);
+elementCheck.addEventListener('click', checkAnswer);
+elementGuess.addEventListener('keydown', checkAnswerOnEnter);
+elementAgain.addEventListener('click', againButton);
 
-function displayElementContent(elementSelector, text) {
-  document.querySelector(elementSelector).textContent = text;
-}
+elementAgain.addEventListener('keydown', function (event) {
+  console.log(event.key);
+});
 
-function getRandomValue() {
-  const randomIndex = Math.trunc(Math.random() * value.length);
-  return value[randomIndex];
-}
-
-function getSecretWordAndHint() {
-  const randomValue = getRandomValue();
-  secretWord = randomValue.word;
-  hints = randomValue.hint;
-  elementHint.textContent = hints;
+function againButton() {
+  score = maxScore;
+  getSecretWordAndHint();
+  elementNumber.textContent = '?';
+  displayElementContent('.message', 'Start guessing...');
+  elementMessage.style.color = '#eee';
+  elementGuess.value = '';
+  elementBody.style.backgroundColor = '#222';
+  elementNumber.style.width = '15rem';
+  displayElementContent('.score', score);
+  attempts = 0;
 }
 
 function checkAnswer() {
@@ -85,15 +88,24 @@ function checkAnswer() {
   }
 }
 
-function againButton() {
-  score = maxScore;
-  getSecretWordAndHint();
-  elementNumber.textContent = '?';
-  displayElementContent('.message', 'Start guessing...');
-  elementMessage.style.color = '#eee';
-  elementGuess.value = '';
-  elementBody.style.backgroundColor = '#222';
-  elementNumber.style.width = '15rem';
-  displayElementContent('.score', score);
-  attempts = 0;
+function checkAnswerOnEnter(event) {
+  if (event.key === 'Enter') {
+    checkAnswer();
+  }
+}
+
+function displayElementContent(elementSelector, text) {
+  document.querySelector(elementSelector).textContent = text;
+}
+
+function getRandomValue() {
+  const randomIndex = Math.trunc(Math.random() * value.length);
+  return value[randomIndex];
+}
+
+function getSecretWordAndHint() {
+  const randomValue = getRandomValue();
+  secretWord = randomValue.word;
+  hints = randomValue.hint;
+  elementHint.textContent = hints;
 }
