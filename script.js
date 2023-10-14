@@ -1,6 +1,7 @@
 'use strict';
+
 const maxScore = 20;
-let score = maxScore;
+let score = 20;
 let highscore = 0;
 const maxAttempts = 3;
 let attempts = 0;
@@ -21,7 +22,7 @@ const elementNumber = document.querySelector('.number');
 const elementBody = document.querySelector('body');
 const elementMessage = document.querySelector('.message');
 const elementHighscore = document.querySelector('.highscore');
-const elementAgain = document.querySelector('.again');
+const elementReset = document.querySelector('.reset');
 const elementHint = document.querySelector('.hint');
 const elementGuess = document.querySelector('.guess');
 const elementCheck = document.querySelector('.check');
@@ -29,13 +30,13 @@ const elementCheck = document.querySelector('.check');
 window.addEventListener('load', getSecretWordAndHint);
 elementCheck.addEventListener('click', checkAnswer);
 elementGuess.addEventListener('keydown', checkAnswerOnEnter);
-elementAgain.addEventListener('click', againButton);
+elementReset.addEventListener('click', resetButton);
 
-elementAgain.addEventListener('keydown', function (event) {
+elementReset.addEventListener('keydown', function (event) {
   console.log(event.key);
 });
 
-function againButton() {
+function resetButton() {
   score = maxScore;
   getSecretWordAndHint();
   elementNumber.textContent = '?';
@@ -71,9 +72,8 @@ function checkAnswer() {
     if (score > 1 && attempts < maxAttempts) {
       displayElementContent(
         '.message',
-        `Nope! Think harder 🧐! You have ${
-          maxAttempts - attempts
-        } attempts left.`
+        `Nope, think harder 🧐!
+        You have ${maxAttempts - attempts} attempts left.`
       );
       elementMessage.style.color = '#f80404';
       score--;
